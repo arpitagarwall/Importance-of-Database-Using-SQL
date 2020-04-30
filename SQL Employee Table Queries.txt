@@ -1,0 +1,159 @@
+CREATE DATABASE Database_1;
+
+USE Database_1;
+
+CREATE TABLE Employee 
+(
+EmployeeID int,
+EmployeeCode varchar(8000),
+FirstName varchar(8000),
+LastName varchar(8000),
+Gender varchar(8000),
+Email varchar(8000),
+Phone bigint
+);
+
+INSERT INTO Employee VALUES ('1', 'EMP-001', 'Marc', 'Andrew', 'M', 'xyz@gmail.com', '1111111111');
+INSERT INTO Employee VALUES ('2', 'EMP-002', 'Rasewari', 'Achanta', 'F', 'www@gmail.com', '2222222222');
+INSERT INTO Employee VALUES ('3', 'EMP-003', 'Stephen', 'Rooke', 'M', 'abc@gmail.com', '3333333333');
+
+
+SELECT * FROM Employee;
+
+Output:
+
+1	EMP-001	Marc	Andrew	M	xyz@gmail.com	1111111111
+2	EMP-002	Rasewari	Achanta	F	www@gmail.com	2222222222
+3	EMP-003	Stephen	Rooke	M	abc@gmail.com	3333333333
+
+
+
+CREATE TABLE EmployeeDOB 
+(
+EmployeeID int,
+DOB varchar(8000),
+);
+
+
+INSERT INTO EmployeeDOB VALUES ('1', '11-03-1980');
+INSERT INTO EmployeeDOB VALUES ('2', '12-03-1980');
+INSERT INTO EmployeeDOB VALUES ('3', 'Not Known');
+
+
+SELECT * FROM EmployeeDOB;
+
+Output:
+
+1	11-03-1980
+2	12-03-1980
+3	Not Known
+
+CREATE TABLE Employee2 
+(
+EmployeeID int,
+EmployeeCode varchar(8000),
+FirstName varchar(8000),
+LastName varchar(8000),
+Gender varchar(8000),
+Email varchar(8000),
+Phone bigint
+);
+
+INSERT INTO Employee2 VALUES ('1', 'EMP-001', 'Marc', 'Andrew', 'M', 'xyz@gmail.com', '1111111111');
+INSERT INTO Employee2 VALUES ('4', 'EMP-004', 'Sam', 'Peter', 'M', 'ppp@gmail.com', '4444444444');
+
+
+SELECT * FROM Employee2;
+
+Output:
+
+1	EMP-001	Marc	Andrew	M	xyz@gmail.com	1111111111
+4	EMP-004	Sam	Peter	M	ppp@gmail.com	4444444444
+
+
+SELECT ('Email address of Mr. ' + FirstName + ' ' + LastName + ' is ' + Email + ' and DOB is ' + DOB)AS Info From Employee E INNER JOIN  EmployeeDOB D ON E.EmployeeID = D.EmployeeID ORDER BY EmployeeCode;
+
+Output:
+
+Email address of Mr. Marc Andrew is xyz@gmail.com and DOB is 11-03-1980
+Email address of Mr. Rasewari Achanta is www@gmail.com and DOB is 12-03-1980
+Email address of Mr. Stephen Rooke is abc@gmail.com and DOB is Not Known
+
+
+INSERT INTO Employee VALUES ('4', 'EMP-004', 'Ron', 'Brooke', 'M', 'pst@gmail.com', '4444444444');
+
+SELECT * FROM Employee;
+
+
+Output:
+
+1	EMP-001	Marc	Andrew	M	xyz@gmail.com	1111111111
+2	EMP-002	Rasewari	Achanta	F	www@gmail.com	2222222222
+3	EMP-003	Stephen	Rooke	M	abc@gmail.com	3333333333
+4	EMP-004	Ron	Brooke	M	pst@gmail.com	4444444444
+
+INSERT INTO EmployeeDOB VALUES ('4', 'Unknown');
+
+SELECT * FROM EmployeeDOB;
+
+Output:
+
+1	11-03-1980
+2	12-03-1980
+3	Not Known
+4	Unknown
+
+UPDATE Employee SET Phone = '5555555555' WHERE Phone = '4444444444';
+
+SELECT * FROM Employee;
+
+Output:
+
+1	EMP-001	Marc	Andrew	M	xyz@gmail.com	1111111111
+2	EMP-002	Rasewari	Achanta	F	www@gmail.com	2222222222
+3	EMP-003	Stephen	Rooke	M	abc@gmail.com	3333333333
+4	EMP-004	Ron	Brooke	M	pst@gmail.com	5555555555
+
+
+UPDATE EmployeeDOB SET DOB = 'Dont Know' WHERE DOB = 'Unknown';
+
+SELECT * FROM EmployeeDOB; 
+
+Output:
+
+1	11-03-1980
+2	12-03-1980
+3	Not Known
+4	Dont Know
+
+
+DELETE FROM Employee WHERE Phone = '5555555555';
+
+SELECT * FROM Employee;
+Output:
+
+1	EMP-001	Marc	Andrew	M	xyz@gmail.com	1111111111
+2	EMP-002	Rasewari	Achanta	F	www@gmail.com	2222222222
+3	EMP-003	Stephen	Rooke	M	abc@gmail.com	3333333333
+
+DELETE FROM EmployeeDOB WHERE DOB = 'Dont Know';
+
+SELECT * FROM EmployeeDOB;
+
+Output:
+
+1	11-03-1980
+2	12-03-1980
+3	Not Known
+
+
+INSERT INTO Employee (EmployeeID, EmployeeCode, FirstName, LastName, Gender, Email, Phone) SELECT Employee2.EmployeeID, Employee2.EmployeeCode, Employee2.FirstName, Employee2.LastName, Employee2.Gender, Employee2.Email, Employee2.Phone FROM Employee2 WHERE Employee2.EmployeeCode NOT IN (SELECT EmployeeCode FROM Employee);
+
+SELECT * FROM Employee;
+
+Output:
+
+1	EMP-001	Marc	Andrew	M	xyz@gmail.com	1111111111
+2	EMP-002	Rasewari	Achanta	F	www@gmail.com	2222222222
+3	EMP-003	Stephen	Rooke	M	abc@gmail.com	3333333333
+4	EMP-004	Sam	Peter	M	ppp@gmail.com	4444444444
